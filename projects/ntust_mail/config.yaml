@@ -1,0 +1,23 @@
+Model:
+    CharSet: [' ', '0', '2', '6', '5', '3', '8', '1', '4', '9', '7']
+    ImageChannel: 1
+    ImageHeight: 64
+    ImageWidth: -1
+    Word: false
+System:
+    Allow_Ext: [jpg, jpeg, png, bmp]
+    GPU: false
+    GPU_ID: 0
+    Path: ./projects/ntust_captcha/images_set
+    Project: test
+    Val: 0.3
+Train:
+    BATCH_SIZE: 32
+    CNN: {NAME: ddddocr}
+    DROPOUT: 0.3
+    LR: 0.01
+    OPTIMIZER: SGD
+    SAVE_CHECKPOINTS_STEP: 200
+    TARGET: {Accuracy: 0.97, Cost: 0.05, Epoch: 20}
+    TEST_BATCH_SIZE: 32
+    TEST_STEP: 100
