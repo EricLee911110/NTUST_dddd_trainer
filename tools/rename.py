@@ -1,52 +1,51 @@
-import sys
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import pyqtSlot
+# This python file will delete and rename files by the following rules
+# 1. convert "o" to "0"
+# 2. if filename contains english letter other than "o", will be deleted
+# 3. if the charactor of a filename is less than 5, will be deleted
 
-class App(QWidget):
+import os
+import uuid
 
-    def __init__(self):
-        super().__init__()
-        self.iteration = 0
-        self.title = 'PyQt5 button - pythonspot.com'
-        self.left = 10
-        self.top = 10
-        self.width = 320
-        self.height = 200
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        print("-init-")
-        self.initUI()
+directory = 'correct_captcha_images'
+#english_letters = [abcdefghijklmnopqrstuvwxyz]
+a = 'g863E'
+b = '52953'
+c = 'o2441'
+d = 'o2dda'
+
+o_count = 0
+eng_count = 0
+five_count = 0
+
+for filename in os.listdir(directory):
+    old_file = os.path.join(directory, filename)
+
+    old_predict = filename.split('_')[0].lower()
+    new_predict = old_predict.replace('o', '0')
+    id = filename.split('_')[1]
     
-    def initUI(self):
-        print("-initGUI-", self.iteration)
+    # replace o to 0
+    new_file = os.path.join(directory, f'{new_predict}_{id}')
+    
+    if "o" in old_predict:
+        os.rename(old_file, new_file)
+        o_count += 1
         
-        button = QPushButton('PyQt5 button', self)
-        button.setToolTip('This is an example button')
-        button.move(100,70)
-        button.clicked.connect(self.on_click)
-        
-        self.label = QLabel(self)
-        self.pixmap = QPixmap(f'{self.iteration}.png')
- 
-        # adding image to label
-        self.label.setPixmap(self.pixmap)
- 
-        # Optional, resize label to image size
-        self.label.resize(self.pixmap.width(), self.pixmap.height())
- 
-        
-        self.show()
 
-    @pyqtSlot()
-    def on_click(self):
-        print('PyQt5 button click')
-        self.iteration += 1
-        self.pixmap = QPixmap(f'{self.iteration}.png') 
-        self.label.setPixmap(self.pixmap)
+    # delete if contains other letter
+    if new_predict.islower():
+        os.remove(new_file)
+        eng_count += 1
+    
+    if len(new_predict) != 5:
+        os.remove(new_file)
+        five_count += 1
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = App()
-    sys.exit(app.exec_())
+        
+
+print()
+print(f'{o_count} files have renamed becasue of o')
+print(f'{eng_count} files have deleted becasue of english letter')
+print(f'{five_count} files have deleted becasue of not containing 5 digits')
+print()
