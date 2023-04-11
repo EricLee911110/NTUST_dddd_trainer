@@ -6,7 +6,7 @@
 import os
 import uuid
 
-directory = 'Large_Captcha_Dataset'
+directory = 'ntust_validate_dataset'
 
 a = ['g863E', '52953', 'o2441', 'o2dda', '(1123', '12491']
 #for e in a:
