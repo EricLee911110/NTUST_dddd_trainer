@@ -69,6 +69,7 @@ print()
 
 
 # Only preform this after you remove the files for once
+"""
 for i in range(len(files)):
     filename = files[i]
     first_name = filename.split('.')[0]
@@ -77,3 +78,4 @@ for i in range(len(files)):
     new_filename = f'{directory}/{first_name}_{i}.png'
     
     os.rename(old_filename, new_filename)
+"""
