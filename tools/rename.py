@@ -66,3 +66,14 @@ print(f'{o_count} files have renamed becasue of o')
 print(f'{eng_count} files have deleted becasue of english letter')
 print(f'{five_count} files have deleted becasue of not containing 5 digits')
 print()
+
+
+# Only preform this after you remove the files for once
+for i in range(len(files)):
+    filename = files[i]
+    first_name = filename.split('.')[0]
+
+    old_filename = f'{directory}/{filename}'
+    new_filename = f'{directory}/{first_name}_{i}.png'
+    
+    os.rename(old_filename, new_filename)
