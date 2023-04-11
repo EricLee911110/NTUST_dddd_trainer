@@ -42,6 +42,6 @@ function base64_to_jpeg($base64_string, $output_file) {
     return $output_file; 
 }
 
-for ($i=0; $i < 1000; $i++) { 
+for ($i=0; $i < 12000; $i++) { 
     base64_to_jpeg(fetch(), $i . ".png");
 }
