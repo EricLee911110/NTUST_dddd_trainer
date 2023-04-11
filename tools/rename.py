@@ -6,7 +6,7 @@
 import os
 import uuid
 
-directory = 'correct_captcha_12000'
+directory = 'Large_Captcha_Dataset'
 
 a = ['g863E', '52953', 'o2441', 'o2dda', '(1123', '12491']
 #for e in a:
@@ -15,27 +15,37 @@ a = ['g863E', '52953', 'o2441', 'o2dda', '(1123', '12491']
 progress = 0
 print_every = 200
 
+large_captcha_dataset = False
+if directory == "Large_Captcha_Dataset":
+    large_captcha_dataset = True
+
 o_count = 0
 eng_count = 0
 five_count = 0
 
 print(f'Going to process {len(os.listdir(directory))} images, please hold')
 
-for filename in os.listdir(directory):
+files = os.listdir(directory)
+for filename in files:
     old_file = os.path.join(directory, filename)
 
     old_predict = filename.split('_')[0].lower()
     new_predict = old_predict.replace('o', '0')
-    id = filename.split('_')[1]
+    if large_captcha_dataset:
+        new_file = os.path.join(directory, filename)
+        new_predict = filename.split('.')[0]
+    else:
+        id = filename.split('_')[1]
+        new_file = os.path.join(directory, f'{new_predict}_{id}')
     
     # replace o to 0
-    new_file = os.path.join(directory, f'{new_predict}_{id}')
     
-    if "o" in old_predict:
-        os.rename(old_file, new_file)
-        o_count += 1
-        
-
+    
+    if not large_captcha_dataset:
+        if "o" in old_predict:
+            os.rename(old_file, new_file)
+            o_count += 1
+    
     # delete if contains not number
     if not new_predict.isnumeric():
         os.remove(new_file)
