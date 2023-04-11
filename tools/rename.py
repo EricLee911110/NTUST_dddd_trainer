@@ -6,16 +6,20 @@
 import os
 import uuid
 
-directory = 'correct_captcha_images'
-#english_letters = [abcdefghijklmnopqrstuvwxyz]
-a = 'g863E'
-b = '52953'
-c = 'o2441'
-d = 'o2dda'
+directory = 'correct_captcha_12000'
+
+a = ['g863E', '52953', 'o2441', 'o2dda', '(1123', '12491']
+#for e in a:
+#    print(e.isnumeric())
+
+progress = 0
+print_every = 200
 
 o_count = 0
 eng_count = 0
 five_count = 0
+
+print(f'Going to process {len(os.listdir(directory))} images, please hold')
 
 for filename in os.listdir(directory):
     old_file = os.path.join(directory, filename)
@@ -32,17 +36,20 @@ for filename in os.listdir(directory):
         o_count += 1
         
 
-    # delete if contains other letter
-    if new_predict.islower():
+    # delete if contains not number
+    if not new_predict.isnumeric():
         os.remove(new_file)
         eng_count += 1
-    
-    if len(new_predict) != 5:
-        os.remove(new_file)
-        five_count += 1
+    else:
+        # delete if not contains 5 digits
+        if len(new_predict) != 5:
+            os.remove(new_file)
+            five_count += 1
 
-
-        
+    if progress % print_every == 0:
+        print(f'step: {progress}')
+    progress += 1
+ 
 
 print()
 print(f'{o_count} files have renamed becasue of o')
