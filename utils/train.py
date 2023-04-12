@@ -10,6 +10,21 @@ from loguru import logger
 from utils import load_cache
 from nets import Net
 
+from prettytable import PrettyTable
+
+def count_parameters(model):
+    table = PrettyTable(["Modules", "Parameters"])
+    total_params = 0
+    for name, parameter in model.named_parameters():
+        if not parameter.requires_grad: continue
+        params = parameter.numel()
+        table.add_row([name, params])
+        total_params+=params
+    print(table)
+    print(f"Total Trainable Params: {total_params}")
+    return total_params
+
+
 
 class Train:
     def __init__(self, project_name: str):
@@ -75,7 +90,8 @@ class Train:
         logger.info(self.net)
         logger.info("\nBuilding End")
 
-
+        #count_parameters(self.net)
+        #print(self.net.parameters())
 
         self.net = self.net.to(self.device)
         logger.info("\nGet Data Loader...")

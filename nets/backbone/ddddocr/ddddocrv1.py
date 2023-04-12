@@ -4,6 +4,8 @@
 import torch
 import torch.nn as nn
 
+from torchsummary import summary
+
 
 class DdddOcr(nn.Module):
     def __init__(self, nc=3, leakyRelu=False):
@@ -30,19 +32,19 @@ class DdddOcr(nn.Module):
             else:
                 cnn.add_module('relu{0}'.format(i), nn.ReLU(True))
 
-        convRelu(0)
+        convRelu(0) # (3, 16, 3, 1, 1)
         cnn.add_module('pooling{0}'.format(0), nn.MaxPool2d(2, 2))  # 64x16x64
-        convRelu(1)
+        convRelu(1) # (16, 32, 3, 1, 1)
         cnn.add_module('pooling{0}'.format(1), nn.MaxPool2d(2, 2))  # 128x8x32
-        convRelu(2, True)
-        convRelu(3)
+        convRelu(2, True) # (32, 64, 3, 1, 1)
+        convRelu(3) # (64, 64, 3, 1, 1)
         cnn.add_module('pooling{0}'.format(2),
                        nn.MaxPool2d((2, 2), (2, 1), (0, 1)))  # 256x4x16
-        convRelu(4, True)
-        convRelu(5)
+        convRelu(4, True) # (128, 64, 3, 1, 1)
+        convRelu(5) # (128, 128, 3, 1, 1)
         cnn.add_module('pooling{0}'.format(3),
                        nn.MaxPool2d((2, 2), (2, 1), (0, 1)))  # 512x2x16
-        convRelu(6, True)  # 512x1x16
+        convRelu(6, True)  # 512x1x16 # (128, 128, 2, 0, 1)
 
         self.cnn = cnn
 
@@ -52,6 +54,7 @@ class DdddOcr(nn.Module):
 def test():
     net = DdddOcr(1)
     x = torch.randn(1, 1, 128, 128)
+    summary(net, (1,128,128))
     y = net(x)
     print(y.size())
 
