@@ -24,7 +24,7 @@ def count_parameters(model):
     print(f"Total Trainable Params: {total_params}")
     return total_params
 
-
+acc_every_100_steps = []
 
 class Train:
     def __init__(self, project_name: str):
@@ -119,13 +119,16 @@ class Train:
                 self.avg_loss += loss
 
                 self.step += 1
-
+                
+                # print every step
                 if self.step % 100 == 0 and self.step % self.test_step != 0:
                     logger.info("{}\tEpoch: {}\tStep: {}\tLastLoss: {}\tAvgLoss: {}\tLr: {}".format(
                         time.strftime("[%Y-%m-%d-%H_%M_%S]", time.localtime(self.now_time)), self.epoch, self.step,
                         str(loss), str(self.avg_loss / 100), lr
                     ))
                     self.avg_loss = 0
+
+                # save model
                 if self.step % self.save_checkpoints_step == 0 and self.step != 0:
                     model_path = os.path.join(self.checkpoints_path, "checkpoint_{}_{}_{}.tar".format(
                         self.project_name, self.epoch, self.step,
@@ -135,6 +138,7 @@ class Train:
                                         {"net": self.net.state_dict(), "optimizer": self.net.optimizer.state_dict(),
                                          "epoch": self.epoch, "step": self.step, "lr": lr})
 
+                # print test result every test_steps
                 if self.step % self.test_step == 0:
                     try:
                         test_inputs, test_labels, test_labels_length = next(val_iter)
@@ -150,6 +154,7 @@ class Train:
                                                                                          test_labels_length)
                     self.net = self.net.train()
                     accuracy = len(correct_list) / test_inputs.shape[0]
+                    acc_every_100_steps.append(accuracy)
                     logger.info("{}\tEpoch: {}\tStep: {}\tLastLoss: {}\tAvgLoss: {}\tLr: {}\tAcc: {}".format(
                         time.strftime("[%Y-%m-%d-%H_%M_%S]", time.localtime(self.now_time)), self.epoch, self.step,
                         str(loss), str(self.avg_loss / 100), lr, accuracy
