@@ -161,8 +161,24 @@ class Train:
                     self.net = self.net.train()
                     accuracy = len(correct_list) / test_inputs.shape[0]
 
-                    logger.info(f'\n pred_labels: \n{pred_labels}')
-                    logger.info(f'\n labels_list: \n{labels_list}')
+                    #logger.info(f'\n pred_labels: \n{pred_labels}')
+                    #logger.info(f'\n labels_list: \n{labels_list}')
+                    correct_label_count = 0
+                    label_count = 0
+                    for i_label_list in range(len(labels_list)):
+                        for ii_label_list in range(len(labels_list[i_label_list])):
+                            correct_label = labels_list[i_label_list][ii_label_list]
+                            try:
+                                pred_label = pred_labels[i_label_list][ii_label_list]
+                            except:
+                                pred_label = None
+                            
+                            if correct_label == pred_label:
+                                correct_label_count += 1
+                            label_count += 1
+
+                    accuracy = correct_label_count / label_count
+
                     
                     acc_every_10_steps.append(accuracy)
                     with open(f'acc_list_{self.total_parameters}_{self.dataset_size}.txt', 'w') as acc_f:
