@@ -6,11 +6,11 @@ Model:
     Word: false
 System:
     Allow_Ext: [jpg, jpeg, png, bmp]
-    GPU: false
+    GPU: true
     GPU_ID: 0
     Path: ./projects/ntust_captcha/images_set
     Project: test
-    Val: 0.3
+    Val: 0.2
 Train:
     BATCH_SIZE: 32
     CNN: {NAME: ddddocr}
@@ -18,6 +18,6 @@ Train:
     LR: 0.01
     OPTIMIZER: SGD
     SAVE_CHECKPOINTS_STEP: 200
-    TARGET: {Accuracy: 0.97, Cost: 0.05, Epoch: 20}
+    TARGET: {Accuracy: -1, Cost: 0.05, Epoch: 50}
     TEST_BATCH_SIZE: 32
-    TEST_STEP: 100
+    TEST_STEP: 10

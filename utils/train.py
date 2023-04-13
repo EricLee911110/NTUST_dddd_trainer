@@ -24,7 +24,7 @@ def count_parameters(model):
     print(f"Total Trainable Params: {total_params}")
     return total_params
 
-acc_every_100_steps = []
+acc_every_10_steps = []
 
 class Train:
     def __init__(self, project_name: str):
@@ -40,6 +40,12 @@ class Train:
         self.optimizer = None
         self.config = Config(project_name)
         self.conf = self.config.load_config()
+
+        # try getting the dataset size from congif Path
+        try:
+            self.dataset_size = self.conf['System']['Path'].split('/')[4].split[1]
+        except:
+            self.dataset_size = "unknown"
 
         self.test_step = self.conf['Train']['TEST_STEP']
         self.save_checkpoints_step = self.conf['Train']['SAVE_CHECKPOINTS_STEP']
@@ -90,7 +96,7 @@ class Train:
         logger.info(self.net)
         logger.info("\nBuilding End")
 
-        #count_parameters(self.net)
+        self.total_parameters = count_parameters(self.net)
         #print(self.net.parameters())
 
         self.net = self.net.to(self.device)
@@ -154,7 +160,16 @@ class Train:
                                                                                          test_labels_length)
                     self.net = self.net.train()
                     accuracy = len(correct_list) / test_inputs.shape[0]
-                    acc_every_100_steps.append(accuracy)
+
+                    logger.info(f'\n pred_labels: \n{pred_labels}')
+                    logger.info(f'\n labels_list: \n{labels_list}')
+                    
+                    acc_every_10_steps.append(accuracy)
+                    with open(f'acc_list_{self.total_parameters}_{self.dataset_size}.txt', 'w') as acc_f:
+                      for acc_e in acc_every_10_steps:
+                        acc_f.write(f'{str(acc_e)}\n')
+                    acc_f.close()
+
                     logger.info("{}\tEpoch: {}\tStep: {}\tLastLoss: {}\tAvgLoss: {}\tLr: {}\tAcc: {}".format(
                         time.strftime("[%Y-%m-%d-%H_%M_%S]", time.localtime(self.now_time)), self.epoch, self.step,
                         str(loss), str(self.avg_loss / 100), lr, accuracy
