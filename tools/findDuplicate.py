@@ -3,8 +3,8 @@ import os
 a = []
 b = []
 
-directory1 = "Large_Captcha_Dataset"
-directory2 = "correct_captcha_12000"
+directory1 = "correct_captcha_12000"
+directory2 = "ntust_validate_dataset"
 
 files1 = os.listdir(directory1)
 files2 = os.listdir(directory2)
