@@ -23,9 +23,15 @@ class App:
         pass
 
     def train(self, project_name: str):
-        logger.info("\nStart Train ----> {}\n".format(project_name))
-        trainer = train.Train(project_name)
-        trainer.start()
+        for ModelVersion in range(1):
+            logger.info("\nStart Train ----> {}\n".format(project_name))
+            trainer = train.Train(project_name)
+            # 1. pass in version variable
+            ModelVersion = 0
+            trainer.start(ModelVersion) 
+            # delete checkpoints directory
+
+            # append checkpoints directory
 
 
 
