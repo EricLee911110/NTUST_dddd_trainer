@@ -1,9 +1,11 @@
 import fire
+import os
 
 from loguru import logger
 from utils import project_manager
 from utils import cache_data
 from utils import train
+
 
 
 class App:
@@ -23,15 +25,16 @@ class App:
         pass
 
     def train(self, project_name: str):
-        for ModelVersion in range(1):
+        for ModelVersion in range(2):
             logger.info("\nStart Train ----> {}\n".format(project_name))
             trainer = train.Train(project_name)
             # 1. pass in version variable
             ModelVersion = 0
             trainer.start(ModelVersion) 
             # delete checkpoints directory
-
+            os.rmdir('/content/NTUST_dddd_trainer/projects/ntust_mail/checkpoints')
             # append checkpoints directory
+            os.mkdir('/content/NTUST_dddd_trainer/projects/ntust_mail/checkpoints')
 
 
 

@@ -18,6 +18,6 @@ Train:
     LR: 0.01
     OPTIMIZER: SGD
     SAVE_CHECKPOINTS_STEP: 200
-    TARGET: {Accuracy: -1, Cost: 0.05, Epoch: 50}
+    TARGET: {Accuracy: -1, Cost: 0.05, Epoch: 1}
     TEST_BATCH_SIZE: 32
     TEST_STEP: 10
