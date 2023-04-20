@@ -113,12 +113,10 @@ class Train:
         self.start_time = time.time()
         self.now_time = time.time()
 
-    def start(self, ModelVersion):
+    def start(self):
         val_iter = iter(self.val)
         while True:
             for idx, (inputs, labels, labels_length) in enumerate(self.train):
-                self.ModelVersion = ModelVersion
-                
                 self.now_time = time.time()
                 inputs = self.net.variable_to_device(inputs, device=self.device)
 
@@ -183,7 +181,7 @@ class Train:
 
                     
                     acc_every_10_steps.append(accuracy)
-                    with open(f'acc_list_{self.total_parameters}_{self.dataset_size}_{self.ModelVersion}.txt', 'w') as acc_file: # training steps & versions  #{}_para{}_ds{}_v{}_acc{}_ep{}_step{}.onnx
+                    with open(f'acc_list_{self.total_parameters}_{self.dataset_size}_{time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(self.now_time))}.txt', 'w') as acc_file: # training steps & versions  #{}_para{}_ds{}_v{}_acc{}_ep{}_step{}.onnx
                         for acc_e in acc_every_10_steps:
                             acc_file.write(f'{str(acc_e)}\n')
                     acc_file.close()
@@ -204,8 +202,8 @@ class Train:
                         self.net = self.net.eval().cpu()
                         dynamic_ax = {'input1': {3: 'image_wdith'}, "output": {1: 'seq'}}
                         self.net.export_onnx(self.net, dummy_input,
-                                             os.path.join(self.models_path, "{}_para{}_ds{}_v{}_acc{}_ep{}_step{}.onnx".format(
-                                                 self.project_name, self.total_parameters, self.dataset_size, self.ModelVersion, str(accuracy), self.epoch, self.step,
+                                             os.path.join(self.models_path, "{}_para{}_ds{}_acc{}_ep{}_step{}_{}.onnx".format(
+                                                 self.project_name, self.total_parameters, self.dataset_size, str(accuracy), self.epoch, self.step, time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(self.now_time))
                                                  )) # export models based on (dataset), (model_size), (training_steps), (versions)
                                              , input_names, output_names, dynamic_ax)
                         with open(os.path.join(self.models_path, "charsets.json"), 'w', encoding="utf-8") as f:
