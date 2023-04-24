@@ -183,7 +183,7 @@ class Train:
 
                     
                     acc_every_10_steps.append(accuracy)
-                    with open(f'acc_list_{self.total_parameters}_{self.dataset_size}_{time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(self.now_time))}.txt', 'w') as acc_file: # training steps & versions  #{}_para{}_ds{}_v{}_acc{}_ep{}_step{}.onnx
+                    with open(f'acc_list_{self.total_parameters}_{self.dataset_size}.txt', 'w') as acc_file: # training steps & versions  #{}_para{}_ds{}_v{}_acc{}_ep{}_step{}.onnx
                         for acc_e in acc_every_10_steps:
                             acc_file.write(f'{str(acc_e)}\n')
                     acc_file.close()
