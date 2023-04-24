@@ -136,8 +136,10 @@ class Train:
 
                 # save model
                 if self.step % self.save_checkpoints_step == 0 and self.step != 0:
-                    model_path = os.path.join(self.checkpoints_path, "checkpoint_{}_{}_{}.tar".format(
-                        self.project_name, self.epoch, self.step,
+                    model_path = os.path.join(self.checkpoints_path, "checkpoint_{}_para{}_ds{}_ep{}_step{}_{}.tar".format(
+                        self.project_name, self.total_parameters, self.dataset_size, self.epoch, self.step, time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(self.now_time))
+                        #{}_para{}_ds{}_acc{}_ep{}_step{}_{}.onnx"
+                        #self.project_name, self.total_parameters, self.dataset_size, str(accuracy), self.epoch, self.step, time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(self.now_time))
                     ))
                     self.net.scheduler.step()
                     self.net.save_model(model_path,
