@@ -119,7 +119,7 @@ class Train:
         # stop training the model when the accuracy isn't growing
         highest_accuracy = 0
         stop_count = 0
-        max_stop_count = 10
+        max_stop_count = 50
         early_stopping = False
 
         while True:
