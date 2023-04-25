@@ -1,5 +1,6 @@
 import time
 import subprocess
+import os 
 
 #time_get = time.time()
 #hash_id = subprocess.getstatusoutput('php spider2.php')[1]
@@ -8,6 +9,7 @@ import subprocess
 a = 1
 b = 1
 
+"""
 for i in range(5):
     if i == 2:
         if a == 1:
@@ -19,3 +21,10 @@ for i in range(5):
                             break
 
     print(i)   
+"""
+
+files = os.listdir('wrong_1000')
+file = files[0]
+print(file.split('_'))
+predict = "_".join(file.split('_')[:-1])
+print(predict)
