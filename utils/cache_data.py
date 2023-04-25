@@ -69,7 +69,7 @@ class CacheData:
                 label = line_list[1]
             else:
                 filename = file
-                label = "_".join(filename.split("_")[:-1])
+                label = "".join(filename.split("_")[0])
             if filename in error_files:
                 continue
             label = label.replace(" ", "")
@@ -78,6 +78,7 @@ class CacheData:
                     logger.warning("The {} has black. We will remove it!".format(filename))
                     continue
                 caches.append('\t'.join([filename, label]))
+                #print(f'{filename}\n{label}\n')
                 if not self.conf['Model']['Word']:
                     label = list(label)
                     labels.extend(label)
