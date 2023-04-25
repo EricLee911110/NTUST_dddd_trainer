@@ -115,6 +115,13 @@ class Train:
 
     def start(self):
         val_iter = iter(self.val)
+
+        # stop training the model when the accuracy isn't growing
+        highest_accuracy = 0
+        stop_count = 0
+        max_stop_count = 10
+        early_stopping = False
+
         while True:
             for idx, (inputs, labels, labels_length) in enumerate(self.train):
                 self.now_time = time.time()
@@ -161,8 +168,8 @@ class Train:
                     pred_labels, labels_list, correct_list, error_list = self.net.tester(test_inputs, test_labels,
                                                                                          test_labels_length)
                     self.net = self.net.train()
-                    accuracy = len(correct_list) / test_inputs.shape[0]
-
+                    #accuracy = len(correct_list) / test_inputs.shape[0]
+                    
                     #logger.info(f'\n pred_labels: \n{pred_labels}')
                     #logger.info(f'\n labels_list: \n{labels_list}')
                     correct_label_count = 0
@@ -180,6 +187,16 @@ class Train:
                             label_count += 1
 
                     accuracy = correct_label_count / label_count
+                    
+                    if accuracy <= highest_accuracy:
+                        stop_count += 1
+                        print(f'current stop_count: {stop_count}')
+                        if stop_count >= max_stop_count:
+                            early_stopping = True
+                            print(f'-------going to stop early!!!--------')
+                    else:
+                        stop_count = 0
+                        highest_accuracy = max(accuracy, highest_accuracy)
 
                     
                     acc_every_10_steps.append(accuracy)
@@ -193,7 +210,8 @@ class Train:
                         str(loss), str(self.avg_loss / 100), lr, accuracy
                     ))
                     self.avg_loss = 0
-                    if accuracy > self.target_acc and self.epoch > self.min_epoch and self.avg_loss < self.max_loss:
+                    #if accuracy > self.target_acc and self.epoch > self.min_epoch and self.avg_loss < self.max_loss:
+                    if early_stopping or self.epoch > self.min_epoch:
                         logger.info("\nTraining Finished!Exporting Model...")
                         dummy_input = self.net.get_random_tensor()
                         input_names = ["input1"]
