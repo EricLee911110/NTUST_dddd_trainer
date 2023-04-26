@@ -4,7 +4,7 @@ import subprocess
 from PIL import Image
 import time
 
-ocr = ddddocr.DdddOcr(det=False, ocr=True, import_onnx_path="/content/NTUST_dddd_trainer/projects/ntust_mail/old_models/ntust_mail_1.0_201_41200_2023-04-11-09-21-32.onnx", charsets_path="/content/NTUST_dddd_trainer/projects/ntust_mail/old_models/charsets.json")
+ocr = ddddocr.DdddOcr(det=False, ocr=True, import_onnx_path="/content/NTUST_dddd_trainer/projects/ntust_mail/models/ntust_mail_para121755_dsunknown_acc1.0_ep4_step1150_2023-04-25-08-59-15.onnx", charsets_path="/content/NTUST_dddd_trainer/projects/ntust_mail/models/charsets.json")
 target_tokens = ['0', '6', '9']
 
 def find_correct(predict):
