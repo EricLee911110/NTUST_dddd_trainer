@@ -98,8 +98,12 @@ def find_correct(predict):
                   return
 
 
+correct_count = 0
+total_count = 0
 
-for i in range(5000):
+for i in range(8000):
+  total_count += 1
+
   print(f'step: {i}')
   time_get = time.time()
   hash_id = subprocess.getstatusoutput('php spider2.php')[1]
@@ -122,6 +126,7 @@ for i in range(5000):
 
   img = Image.open(file_name)
   if correct_prediction == 'true':
+    correct_count += 1
     dir_name = "correct"
     img.save(f'{dir_name}/{predict}_{hash_id}.png')
   else:
@@ -131,6 +136,7 @@ for i in range(5000):
 
   os.remove(file_name)
 
+  print(f'acc: {correct_count / total_count}')
   print()
   # make the wrong answer correct
   if dir_name == "wrong":
