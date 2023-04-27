@@ -56,7 +56,7 @@ def find_correct(predict):
             if result == "true":
               new_filename = f'wrong_to_correct/{predict}_{hash_id}.png'
               img.save(new_filename)
-              print('success!')
+              #print('success!')
               return
 
     if len(positions_needs_switch) == 4:

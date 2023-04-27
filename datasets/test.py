@@ -1,21 +1,11 @@
 import os
+from tqdm import tqdm
 
-delete_files = os.listdir('ntust/wrong_to_correct')
-files = os.listdir('ntust/wrong')
+arr = ['B3x3','B5x5','B7x7','B9x9','P2x2','P4x4','P8x8']
 
-print(len(files))
-file_count = 0
-for file in delete_files:
-    hash = "_".join(file.split('_')[1:])
-    #print(file)
-    #print(hash)
-    for file_b in files:
-        if hash in file_b:
-            file_count += 1
-            os.remove(f'ntust/wrong/{file_b}')
+for folder in tqdm(arr):
+    length = len(os.listdir(f'ntust/{folder}'))
+    print(f'{folder} has {length} files')
 
-files = os.listdir('ntust/wrong')
-print(len(files))
-print(file_count)
-
-
+    #for filename in os.listdir(f'ntust/{folder}'):
+    #    os.remove(f'ntust/{folder}/{filename}')
