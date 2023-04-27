@@ -43,7 +43,7 @@ class Train:
 
         # try getting the dataset size from congif Path
         try:
-            self.dataset_size = self.conf['System']['Path'].split('/')[4].split[1]
+            self.dataset_size = self.conf['System']['Path'].split('/')[4]
         except:
             self.dataset_size = "unknown"
 
