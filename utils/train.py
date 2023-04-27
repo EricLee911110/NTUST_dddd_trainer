@@ -211,7 +211,7 @@ class Train:
                     ))
                     self.avg_loss = 0
                     #if accuracy > self.target_acc and self.epoch > self.min_epoch and self.avg_loss < self.max_loss:
-                    if early_stopping and self.epoch > self.min_epoch:
+                    if early_stopping and self.epoch > self.min_epoch and self.avg_loss < self.max_loss:
                         logger.info("\nTraining Finished!Exporting Model...")
                         dummy_input = self.net.get_random_tensor()
                         input_names = ["input1"]

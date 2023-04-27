@@ -24,7 +24,15 @@ def pixelize(filename: str, dir) -> None:
             print(f'an error occurred in pixelize {i}x{i}: {id}')
 
 if __name__ == '__main__':
-    dir = 'ntust/ntust_val_10000'
+    dir = 'ntust/ntust_10000'
     for filename in tqdm(os.listdir(dir)):
         gaussian(filename, dir)
         pixelize(filename, dir)
+        pass
+    
+    """
+    folders = ['B3x3','B5x5','B7x7','B9x9','P2x2','P4x4','P8x8']
+    for folder in folders:
+        os.mkdir(f'ntust/{folder}_val')
+        os.mkdir(f'ntust/{folder}')
+    """ 
