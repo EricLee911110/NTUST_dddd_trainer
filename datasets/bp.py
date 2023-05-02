@@ -5,11 +5,11 @@ from tqdm import tqdm
 
 def gaussian(filename: str, dir) -> None:
     img = cv2.imread(f'{dir}/{filename}')
-    kernel_size = [3,5,7,9]
+    kernel_size = [15, 45, 99]
     for i in kernel_size:
         try:
             output1 = cv2.GaussianBlur(img, (i, i), 0)    # kernel size i*i
-            cv2.imwrite(f'ntust/B{i}x{i}/{filename}', output1)
+            cv2.imwrite(f'ntust/B{i}x{i}_val/{filename}', output1)
         except:
             id = filename.split('_')[0]
             print(f'an error occurred in blur {i}x{i}: {id}')
@@ -24,10 +24,10 @@ def pixelize(filename: str, dir) -> None:
             print(f'an error occurred in pixelize {i}x{i}: {id}')
 
 if __name__ == '__main__':
-    dir = 'ntust/ntust_10000'
+    dir = 'ntust/ntust_val_10000'
     for filename in tqdm(os.listdir(dir)):
         gaussian(filename, dir)
-        pixelize(filename, dir)
+        #pixelize(filename, dir)
         pass
     
     """
