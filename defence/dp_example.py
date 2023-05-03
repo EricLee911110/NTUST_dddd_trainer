@@ -1,6 +1,6 @@
 # by convention our package is to be imported as dp (for Differential Privacy!)
 import pydp as dp
-from pydp.algorithms.laplacian import BoundedSum, BoundedMean, Count, Max
+from p ydp.algorithms.laplacian import BoundedSum, BoundedMean, Count, Max
 import pandas as pd
 import statistics  # for calculating mean without applying differential privacy
 
