@@ -6,7 +6,11 @@ ocr = ddddocr.DdddOcr(det=False, ocr=True, import_onnx_path="/content/NTUST_dddd
 acc_list = []
 
 list_dir = [
-'/content/NTUST_dddd_trainer/datasets/ntust/ntust_val_10000',  
+'/content/NTUST_dddd_trainer/datasets/ntust/ntust_val_10000',
+'/content/NTUST_dddd_trainer/datasets/ntust/dp-2_val',
+'/content/NTUST_dddd_trainer/datasets/ntust/dp-3_val',
+'/content/NTUST_dddd_trainer/datasets/ntust/dp-4_val',
+'/content/NTUST_dddd_trainer/datasets/ntust/dp-5_val',  
 '/content/NTUST_dddd_trainer/datasets/ntust/P2x2_val',
 '/content/NTUST_dddd_trainer/datasets/ntust/P4x4_val',
 '/content/NTUST_dddd_trainer/datasets/ntust/P8x8_val',

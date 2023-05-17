@@ -42,11 +42,13 @@ if __name__ == '__main__':
     ex = [-2, -3, -4, -5]
     folders = ['dp-2', "dp-3", "dp-4", "dp-5"]
     for filename in tqdm(os.listdir(dir)):
-        for i, e in enumerate(ex):
-            file_path = f'{dir}/{filename}'
-            with Image.open(file_path) as img:
-                img = dp_pixelize(img, e)
-                img.save(f'ntust/{folders[i]}_val/{filename}')
+        if filename == "31337_KXuPL01-11BXEn5Vndn_8Xlhon2HS6tN7xkBn0aijtxANpAGUVvXTggzYE-PrEsFdxnxtEmH3CqHHWoGK3ES-g.png":
+            print("found it")
+            for i, e in enumerate(ex):
+                file_path = f'{dir}/{filename}'
+                with Image.open(file_path) as img:
+                    img = dp_pixelize(img, e)
+                    img.save(f'ntust/{folders[i]}_val/{filename}')
     
     """
     for filename in tqdm(os.listdir(dir)):

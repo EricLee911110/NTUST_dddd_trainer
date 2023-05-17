@@ -33,8 +33,7 @@ def dp_pixelize(img: Image, ex: int):
     sensitivity = 255*m/(b*b)
     for x in range(img.width):
         for y in range(img.height):
-            new = tuple([int(value + np.random.laplace(0, sensitivity/epsilon))
-                         for value in img.getpixel((x, y))])
+            new = tuple([int(value + np.random.laplace(0, sensitivity/epsilon)) for value in img.getpixel((x, y))])
             img.putpixel((x, y), new)
     return img
 
